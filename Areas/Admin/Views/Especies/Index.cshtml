@@ -1,0 +1,48 @@
+﻿@model Tarea_Unidad_3.Models.ViewModels.AnimalesViewModels.IndexViewModel
+
+@{
+    Layout = "LayoutAdmin";
+}
+
+<h1 class="admin-title">Gestión de Especies</h1>
+
+<div class="filtro-categorias">
+    <form method="post" action="~/Admin/Especies/Index">
+        <select name="id" onchange="this.form.submit()">
+            <option value="">Ver todas las especies</option>
+            @foreach (var clase in Model.Clases)
+            {
+                <option value="@clase.Id" @(clase.Id == Model.IdClaseSeleccionada ? "selected" : "")>
+                    @clase.Nombre
+                </option>
+            }
+        </select>
+    </form>
+</div>
+
+<table class="species-table">
+    <thead>
+        <tr>
+            <th>Especie</th>
+            <th>Clase</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var especie in Model.Especies)
+        {
+            <tr>
+                <td>@especie.Especie</td>
+                <td>@especie.ClaseNombre</td>
+                <td class="actions-cell">
+                    <a href="~/Admin/Especies/Editar/@especie.Id" class="action-btn btn-primary">Editar</a>
+                    <a href="~/Admin/Especies/Eliminar/@especie.Id" class="action-btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<section class="btn-group">
+    <a href="~/Admin/Especies/Agregar" class="btn btn-success">Agregar Nueva Especie</a>
+</section>

@@ -1,0 +1,64 @@
+﻿@model Tarea_Unidad_3.Models.ViewModels.AdminAnimalesViewModels.EditarEspecieViewModel
+@{
+    Layout = "LayoutAdmin";
+}
+
+<h1>Editar Especie</h1>
+
+<form method="post" action="~/Admin/Especies/Editar" enctype="multipart/form-data">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    @Html.ValidationSummary()
+
+    <label>Especie:</label>
+    <input type="text" name="Especie" value="@Model.Especie" required />
+
+    <label>Clase:</label>
+    <select name="IdClase" required>
+        <option value="">-- Seleccionar clase --</option>
+        @foreach (var clase in Model.Clases)
+        {
+            <option value="@clase.Id" @(clase.Id == Model.IdClase ? "selected" : "")>@clase.Nombre</option>
+        }
+    </select>
+
+    <label>Habitat:</label>
+    <input type="text" name="Habitat" value="@Model.Habitat" required />
+
+    <label>Peso (kg):</label>
+    <input type="number" name="Peso" value="@Model.Peso" required step="0.01" min="0.01" />
+
+    <label>Tamaño (cm):</label>
+    <input type="number" name="Tamaño" value="@Model.Tamaño" required min="1" />
+
+    <label>Observaciones:</label>
+    <textarea name="Observaciones" rows="3">@Model.Observaciones</textarea>
+
+    <label>Imagen:</label>
+    <input type="file" name="Imagen" accept="image/jpeg" />
+    <img id="imagePreview" src="~/especies/@(Model.Id).jpg" alt="Vista previa de la imagen" />
+
+    <div class="botones">
+        <input type="submit" value="Guardar" />
+        <a href="~/Admin/Especies/Index" class="btnCancelar">Cancelar</a>
+    </div>
+</form>
+
+<script>
+    function mostrarImagen(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imagePreview').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const fileUpload = document.querySelector('input[type="file"]');
+        fileUpload.addEventListener('change', function () {
+            mostrarImagen(this);
+        });
+    });
+</script>

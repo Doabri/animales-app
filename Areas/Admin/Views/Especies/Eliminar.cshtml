@@ -1,0 +1,19 @@
+﻿@model Tarea_Unidad_3.Models.ViewModels.AdminAnimalesViewModels.EliminarEspecieViewModel
+@{
+    Layout = "LayoutAdmin";
+}
+
+<h1>Eliminar Especie</h1>
+
+<form method="post" action="~/Admin/Especies/Eliminar">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <p>¿Está seguro de eliminar la especie "<strong>@Model.Especie</strong>"?</p>
+
+    @Html.ValidationSummary()
+
+    <div class="botones">
+        <input type="submit" value="Sí, eliminar" />
+        <a href="~/Admin/Especies/Index" class="btnCancelar">Cancelar</a>
+    </div>
+</form>

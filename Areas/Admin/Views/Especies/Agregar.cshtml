@@ -1,0 +1,61 @@
+﻿@model Tarea_Unidad_3.Models.ViewModels.AdminAnimalesViewModels.AgregarEspecieViewModel
+@{
+    Layout = "LayoutAdmin";
+}
+
+<h1>Agregar Especie</h1>
+
+<form method="post" action="~/Admin/Especies/Agregar" enctype="multipart/form-data">
+    @Html.ValidationSummary()
+
+    <label>Especie:</label>
+    <input type="text" name="Especie" value="@Model?.Especie" required />
+
+    <label>Clase:</label>
+    <select name="IdClase" required>
+        <option value="">-- Seleccionar clase --</option>
+        @foreach (var clase in Model.Clases)
+        {
+            <option value="@clase.Id">@clase.Nombre</option>
+        }
+    </select>
+
+    <label>Habitat:</label>
+    <input type="text" name="Habitat" value="@Model?.Habitat" required />
+
+    <label>Peso (kg):</label>
+    <input type="number" name="Peso" value="@Model?.Peso" required step="0.01" min="0.01" />
+
+    <label>Tamaño (cm):</label>
+    <input type="number" name="Tamaño" value="@Model?.Tamaño" required min="1" />
+
+    <label>Observaciones:</label>
+    <textarea name="Observaciones" rows="3">@Model?.Observaciones</textarea>
+
+    <label>Imagen:</label>
+    <input type="file" name="Imagen" accept="image/jpeg" />
+    <img id="imagePreview" src="~/images/no-disponible.png" alt="Vista previa de la imagen" />
+
+    <div class="botones">
+        <input type="submit" value="Agregar" />
+        <a href="~/Admin/Especies/Index" class="btnCancelar">Cancelar</a>
+    </div>
+</form>
+
+<script>
+    function mostrarImagen(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imagePreview').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('input[type="file"]').addEventListener('change', function () {
+            mostrarImagen(this);
+        });
+    });
+</script>

@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<article class="admin-card">
+    <h2 class="admin-title">Gestión de Especies</h2>
+
+    <table class="species-table">
+        <thead>
+            <tr>
+                <th>Especie</th>
+                <th>Clase</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var especie in Model.Especies)
+            {
+                <tr>
+                    <td>@especie.Especie</td>
+                    <td>@especie.ClaseNombre</td>
+                    <td class="actions-cell">
+                        <a href="~/Admin/Especies/Editar/@especie.Id" class="action-btn btn-primary">Editar</a>
+                        <a href="~/Admin/Especies/Eliminar/@especie.Id" class="action-btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <section class="btn-group">
+        <a href="~/Admin/Especies/Agregar" class="btn btn-success">Agregar Nueva Especie</a>
+    </section>
+</article>
+
